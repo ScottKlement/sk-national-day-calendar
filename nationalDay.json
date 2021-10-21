@@ -1,0 +1,166 @@
+{
+  "text": "",
+  "formats": [
+    {
+      "screen": {
+        "record format name": "screen1"
+      },
+      "items": [
+        {
+          "id": "TextArea1",
+          "field type": "text area",
+          "value": {
+            "fieldName": "inputlist",
+            "dataLength": "10000",
+            "trimLeading": "false",
+            "trimTrailing": "true",
+            "blankFill": "false",
+            "rjZeroFill": "false",
+            "dataType": "varchar",
+            "formatting": "Text",
+            "textTransform": "none",
+            "designValue": "[inputlist]"
+          },
+          "left": "50px",
+          "top": "155px",
+          "width": "1140px",
+          "height": "240px",
+          "onkeydown": "event.stopPropagation();",
+          "onkeypress": "event.stopPropagation();",
+          "onkeyup": "event.stopPropagation();"
+        },
+        {
+          "id": "GraphicButton1",
+          "field type": "graphic button",
+          "css class": "pui-solid-button-no",
+          "value": "Quit",
+          "left": "400px",
+          "top": "435px",
+          "width": "100px",
+          "icon position": "left",
+          "css class 2": "blueprint-defaults",
+          "icon": "material:clear",
+          "height": "25px",
+          "shortcut key": "F3",
+          "response": {
+            "fieldName": "quit",
+            "customTrue": "",
+            "customFalse": "",
+            "dataType": "indicator",
+            "formatting": "Indicator",
+            "indFormat": "1 / 0"
+          }
+        },
+        {
+          "id": "GraphicButton2",
+          "field type": "graphic button",
+          "css class": "pui-solid-button-yes",
+          "value": "Go",
+          "left": "285px",
+          "top": "435px",
+          "width": "100px",
+          "icon position": "left",
+          "css class 2": "blueprint-defaults",
+          "icon": "material:check",
+          "height": "25px",
+          "shortcut key": "Enter"
+        },
+        {
+          "id": "TextBox1",
+          "field type": "textbox",
+          "css class": "input",
+          "value": {
+            "fieldName": "resultpath",
+            "dataLength": "300",
+            "trimLeading": "false",
+            "trimTrailing": "true",
+            "blankFill": "false",
+            "rjZeroFill": "false",
+            "dataType": "varchar",
+            "formatting": "Text",
+            "textTransform": "none",
+            "designValue": "[resultpath]"
+          },
+          "left": "50px",
+          "top": "105px",
+          "width": "1140px"
+        },
+        {
+          "id": "OutputField1",
+          "field type": "output field",
+          "css class": "label",
+          "value": "Folder to save to:",
+          "left": "55px",
+          "top": "80px",
+          "css class 2": "blueprint-defaults",
+          "css class 3": "blueprint-label"
+        },
+        {
+          "id": "OutputField1_copy",
+          "field type": "output field",
+          "css class": "label",
+          "value": "URLs to Download, Resize, and Store (one per line):",
+          "left": "55px",
+          "top": "135px",
+          "css class 2": "blueprint-defaults",
+          "css class 3": "blueprint-label"
+        },
+        {
+          "id": "GraphicButton3",
+          "field type": "graphic button",
+          "css class": "blueprint-button",
+          "value": "Today",
+          "left": "660px",
+          "top": "55px",
+          "width": "100px",
+          "icon position": "left",
+          "css class 2": "blueprint-alt-defaults",
+          "css class 3": "no-icon",
+          "height": "25px",
+          "onclick": "window.open(\"https://nationaldaycalendar.com/what-day-is-it/\");"
+        },
+        {
+          "id": "GraphicButton3_copy",
+          "field type": "graphic button",
+          "css class": "blueprint-button",
+          "value": "Tomorrow",
+          "icon position": "left",
+          "left": "780px",
+          "top": "55px",
+          "height": "25px",
+          "width": "100px",
+          "css class 2": "blueprint-alt-defaults",
+          "css class 3": "no-icon",
+          "onclick": "window.open(\"https://nationaldaycalendar.com/tomorrow/\");"
+        },
+        {
+          "id": "OutputField2",
+          "field type": "output field",
+          "css class": "heading",
+          "value": "National Day Calendar",
+          "left": "50px",
+          "top": "10px",
+          "css class 2": "blueprint-defaults",
+          "css class 3": "blueprint-text-header",
+          "font size": "30px"
+        },
+        {
+          "id": "GraphicButton4",
+          "field type": "graphic button",
+          "css class": "blueprint-button",
+          "value": "Install Script",
+          "left": "1090px",
+          "top": "55px",
+          "width": "100px",
+          "icon position": "left",
+          "css class 2": "blueprint-alt-defaults",
+          "css class 3": "no-icon",
+          "height": "25px",
+          "onclick": "pui.link(\"public/NationalDayCalendar.user.js\");\n"
+        }
+      ]
+    }
+  ],
+  "keywords": [],
+  "long name aliases": true
+}

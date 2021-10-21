@@ -1,0 +1,9 @@
+{
+  "description": "Download and reformat pictures from the National Day Calendar website",
+  "current git repository": "",
+  "git repositories": [
+    ""
+  ],
+  "app start": "nationalDay.js",
+  "routes": {}
+}
