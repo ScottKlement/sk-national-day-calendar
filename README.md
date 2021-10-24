@@ -8,6 +8,11 @@ If you haven't already, you'll need a user-script plugin for your web browser.  
 
 Once that is installed, you'll also need the <a href="public/NationalDayCalendar.user.js">National Day Calendar</a> user script installed.
 
+You will also need:
+1. Profound.js:  `npm install profoundjs`
+2. Sharp:  `cd profoundjs; npm install sharp`
+3. Needle (from profoundjs dir):  `npm install needle@2.4.0`
+
 ## Daily Usage
 To use this program follow these steps:
 
