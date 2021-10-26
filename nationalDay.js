@@ -5,7 +5,7 @@ const fs = pjs.fiber.wrap(require('fs'));
 const Fiber = require('profoundjs-fibers');
 const homedir = require('os').homedir();
 
-var outputDir = homedir + path.sep + ((process.platform==='win32') ? "Documents" + path.sep + "Pictures" : "Pictures") + path.sep + "Backgrounds";
+var outputDir = homedir + path.sep + "Pictures" + path.sep + "Backgrounds";
 var addedDate = false;
 
 function http_get(url, result) { 
