@@ -45,6 +45,38 @@ sck.get = function(gurl, cb) {
   });
 }
 
+sck.parseSrcSet = function(image) {
+  
+  var srcset = image.srcset;
+  var highres = 0;
+  var highurl = "";
+  
+  if (srcset) {
+    srcset = srcset.split(",");
+    console.debug("srcset", srcset);
+    if (Array.isArray(srcset) && srcset.length > 0) {
+      for (var i=0; i<srcset.length; i++) {
+        if (typeof srcset[i] == "string") {
+          srcset[i] = srcset[i].trim();
+          var parts = srcset[i].split(" ");
+          console.debug("  parts", parts);
+          if (parts.length == 2) {
+            var res = parseInt(parts[1]);
+            if (res > highres) {
+              highres = res;
+              highurl = parts[0];
+              console.debug("    result", highurl);
+            }
+          }
+        }
+      }
+    }
+  } 
+  
+  return (highres > 0) ? highurl : null;
+  
+}
+
 sck.findImageUrlDom = function(link) { 
   
   sck.get(link.href, function(xhr) {
@@ -53,7 +85,8 @@ sck.findImageUrlDom = function(link) {
     var images = el.getElementsByTagName("img");
     for (var i=0; i<images.length; i++) {
       var image = images[i];
-      if (image.className.indexOf("wp-image") !== -1) {
+      var src = sck.parseSrcSet(image);
+      if (src !== null) {
         var t = document.getElementById("scktextarea");
         t.appendChild(document.createTextNode(image.src + "\n"));
         break;
