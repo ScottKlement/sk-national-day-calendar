@@ -3,7 +3,8 @@
   "formats": [
     {
       "screen": {
-        "record format name": "screen1"
+        "record format name": "screen1",
+        "onload": "document.title = \"NDC Downloader\";\n\nwindow.setResultPath = function(days) {\n  var resultPath = get(\"resultPath\");\n  if (get(\"hidePath\") === resultPath) {\n    var curDate = new Date();\n    var sep = ( resultPath.indexOf(\"\\\\\") > 0 ) ? \"\\\\\" : \"/\";\n    var arr = resultPath.split(sep);\n    if (arr.length > 1) {\n      arr[arr.length - 1] = String(curDate.getFullYear()) + \"-\" + String(curDate.getMonth()+1) + \"-\" + String(curDate.getDate() + days);\n      pui.set(\"resultPath\", arr.join(sep));\n      pui.set(\"hidePath\", arr.join(sep));\n    }\n  }\n}\n"
       },
       "items": [
         {
@@ -66,7 +67,7 @@
           "shortcut key": "Enter"
         },
         {
-          "id": "TextBox1",
+          "id": "resultPath",
           "field type": "textbox",
           "css class": "input",
           "value": {
@@ -117,7 +118,7 @@
           "css class 2": "blueprint-alt-defaults",
           "css class 3": "no-icon",
           "height": "25px",
-          "onclick": "window.open(\"https://nationaldaycalendar.com/what-day-is-it/\");"
+          "onclick": "setResultPath(0);\nwindow.open(\"https://nationaldaycalendar.com/what-day-is-it/\");"
         },
         {
           "id": "GraphicButton3_copy",
@@ -131,7 +132,7 @@
           "width": "100px",
           "css class 2": "blueprint-alt-defaults",
           "css class 3": "no-icon",
-          "onclick": "window.open(\"https://nationaldaycalendar.com/tomorrow/\");"
+          "onclick": "setResultPath(1);\nwindow.open(\"https://nationaldaycalendar.com/tomorrow/\");"
         },
         {
           "id": "OutputField2",
@@ -157,6 +158,26 @@
           "css class 3": "no-icon",
           "height": "25px",
           "onclick": "pui.link(\"public/NationalDayCalendar.user.js\");\n"
+        },
+        {
+          "id": "hidePath",
+          "field type": "textbox",
+          "css class": "input",
+          "value": {
+            "fieldName": "hidepath",
+            "dataLength": "300",
+            "trimLeading": "false",
+            "trimTrailing": "true",
+            "blankFill": "false",
+            "rjZeroFill": "false",
+            "dataType": "varchar",
+            "formatting": "Text",
+            "textTransform": "none",
+            "designValue": "[hidepath]"
+          },
+          "left": "-999px",
+          "top": "-999px",
+          "visibility": "hidden"
         }
       ]
     }
