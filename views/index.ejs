@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>NDC Downloader</title>
+  <script type="text/javascript" src="ndc.js"></script>
+  <link rel="stylesheet" href="ndc.css">
+</head>
+<body onload="body_load()" id="body">
+
+  <h1>National Day Calendar Downloader</h1>
+
+  <div id="buttons">
+    <button id="today" class="navbutton" style="width:100px; height:25px">Today</button>
+    <button id="tomorrow" class="navbutton" style="width:100px; height:25px">Tomorrow</button>
+    <span class="spacer" style="display: inline-block; width:100px"></span>
+    <button id="install" class="navbutton" style="width:100px; height:25px">Install Script</button>
+  </div>
+
+  <form action="/" method="post" id="form">
+
+    <div id="inputs">
+      <p>
+        Folder:<br /> 
+        <input id="resultpath" name="resultpath" type="text" style="width: 1140px" value="<%= resultpath %>">
+        <input id="hidepath" name="hidepath" type="hidden" value="<%= hidepath %>">
+      </p>
+      <p>
+        Image URLs:<br />
+        <textarea id="inputlist" name="inputlist" style="width: 1140px; height:240px" spellcheck="false"><%= inputlist %></textarea>
+      </p>
+    </div>
+  
+    <div id="controls">
+      <input type="submit" name="go" id="go" value="Go" style="width:100px; height:25px">
+      <input type="submit" name="quit" id="quit" value="Quit" style="width:100px; height:25px">
+    </div>
+  
+  </form>
+
+</body>
+</html>

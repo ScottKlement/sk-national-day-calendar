@@ -1,0 +1,31 @@
+p {
+    font-family: Montserrat, sans-serif;
+    color: rgb(57, 110, 223); 
+}
+
+h1 {
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    
+}
+button {
+    background-color: rgb(57, 110, 223);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+}
+
+input[type="submit"] {
+    background-color: rgb(57, 110, 223);
+    color: #fff;
+    border-radius: 10px;
+    border: none;
+}
+
+input#go {
+    background-color: rgb(44, 183, 42);
+}
+
+input#quit {
+    background-color: rgb(207, 7, 14);
+}
