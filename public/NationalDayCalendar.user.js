@@ -88,7 +88,7 @@ sck.findImageUrlDom = function(link) {
       var src = sck.parseSrcSet(image);
       if (src !== null) {
         var t = document.getElementById("scktextarea");
-        t.appendChild(document.createTextNode(image.src + "\n"));
+        t.appendChild(document.createTextNode(src + "\n"));
         break;
       }
     }
