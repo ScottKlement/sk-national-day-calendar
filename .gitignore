@@ -1,3 +1,4 @@
 /node_modules
 /.ts-out
 /.noderun/ide_settings.json
+/package-lock.json
