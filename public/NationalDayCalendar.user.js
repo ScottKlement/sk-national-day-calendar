@@ -47,6 +47,9 @@ sck.get = function(gurl, cb) {
 
 sck.parseSrcSet = function(image) {
   
+  var datasrcimg = image.getAttribute("data-src-img");
+  if (datasrcimg) return datasrcimg;
+  
   var srcset = image.srcset;
   var highres = 0;
   var highurl = "";
@@ -85,11 +88,14 @@ sck.findImageUrlDom = function(link) {
     var images = el.getElementsByTagName("img");
     for (var i=0; i<images.length; i++) {
       var image = images[i];
-      var src = sck.parseSrcSet(image);
-      if (src !== null) {
-        var t = document.getElementById("scktextarea");
-        t.appendChild(document.createTextNode(src + "\n"));
-        break;
+      console.debug(image);
+      if (image.className.indexOf("wp-image") >= 0) {
+        var src = sck.parseSrcSet(image);
+        if (src !== null) {
+          var t = document.getElementById("scktextarea");
+          t.appendChild(document.createTextNode(src + "\n"));
+          break;
+        }
       }
     }
     delete el;
