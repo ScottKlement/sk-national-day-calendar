@@ -112,7 +112,7 @@ async function resizeImage(inpFile, outFile) {
   try {
     var info = await sharp(inpFile)
                      .resize({ width: 1080, height: 540 })
-                     .extract({top: 0, left: 60, width: 960, height: 540})
+                     .extract({top: 0, left: 20, width: 960, height: 540})
                      .toFile(outFile);
   }
   catch (e) {
