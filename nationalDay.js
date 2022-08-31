@@ -125,3 +125,5 @@ async function resizeImage(inpFile, outFile) {
 }
 
 app.listen(8080);
+
+console.log("nationalDay.js is active.  Connect to http://localhost:8080/");
