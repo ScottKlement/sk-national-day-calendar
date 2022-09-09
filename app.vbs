@@ -1,0 +1,1 @@
+CreateObject("Wscript.Shell").Run "node nationalDay.js", 0

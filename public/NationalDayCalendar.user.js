@@ -48,11 +48,16 @@ sck.get = function(gurl, cb) {
 sck.parseSrcSet = function(image) {
   
   var datasrcimg = image.getAttribute("data-src-img");
-  if (datasrcimg) return datasrcimg;
   
   var srcset = image.srcset;
+  if (!srcset) srcset = image.getAttribute("data-srcset-img");
+  
   var highres = 0;
   var highurl = "";
+  
+  
+  console.debug("------- datasrcimg=" + datasrcimg + "   srcset=" + srcset);
+
   
   if (srcset) {
     srcset = srcset.split(",");
@@ -76,7 +81,9 @@ sck.parseSrcSet = function(image) {
     }
   } 
   
-  return (highres > 0) ? highurl : null;
+  if (highres < 800) highurl = datasrcimg;
+  
+  return highurl;
   
 }
 
@@ -86,12 +93,13 @@ sck.findImageUrlDom = function(link) {
     var el = document.createElement('div');
     el.innerHTML = xhr.responseText;
     var images = el.getElementsByTagName("img");
+    console.debug("---Spinning thru " + images.length + " images");
     for (var i=0; i<images.length; i++) {
       var image = images[i];
-      console.debug(image);
       if (image.className.indexOf("wp-image") >= 0) {
         var src = sck.parseSrcSet(image);
         if (src !== null) {
+          console.debug("-----Found " + src);
           var t = document.getElementById("scktextarea");
           t.appendChild(document.createTextNode(src + "\n"));
           break;
@@ -145,4 +153,7 @@ document.body.insertBefore(div, document.body.firstChild);
 
 var list = sck.getList();
 sck.logList(list);
-list.forEach(sck.findImageUrlDom);
+for (var lunk of list) {
+  console.debug("lunk = " + lunk.href);
+  sck.findImageUrlDom(lunk);
+}
