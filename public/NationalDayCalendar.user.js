@@ -9,17 +9,9 @@
 // ==/UserScript==
 var sck = {};
 
-sck.getList = function() {
+sck.getList = function () {
 
-  var list = document.querySelectorAll(".ndc-text-national-day-today-text-list h3 a");
-
-  if (list.length === 0) {
-    list = document.querySelectorAll(".desc_trig_outter a.evcal_list_a");
-  }
-
-  if (list.length === 0) {
-    list = document.querySelectorAll(".ndc-text-tomorrows-celebrations h3 a");
-  }
+  var list = document.querySelectorAll("div.ultp-block-entry-heading h3.ultp-block-title a");
 
   if (list.length === 0) {
     alert("No Links Found!");
@@ -30,40 +22,40 @@ sck.getList = function() {
 }
 
 
-sck.logList = function(list) {
+sck.logList = function (list) {
   if (!list) return;
-  for (var i=0; i<list.length; i++) {
+  for (var i = 0; i < list.length; i++) {
     console.info("link" + i + ": " + list[i].href);
   }
 }
 
-sck.get = function(gurl, cb) {
+sck.get = function (gurl, cb) {
   GM.xmlHttpRequest({
     method: "GET",
     url: gurl,
-    onload: function(xhr) { cb(xhr); }
+    onload: function (xhr) { cb(xhr); }
   });
 }
 
-sck.parseSrcSet = function(image) {
-  
+sck.parseSrcSet = function (image) {
+
   var datasrcimg = image.getAttribute("data-src-img");
-  
+
   var srcset = image.srcset;
   if (!srcset) srcset = image.getAttribute("data-srcset-img");
-  
+
   var highres = 0;
   var highurl = "";
-  
-  
+
+
   console.debug("------- datasrcimg=" + datasrcimg + "   srcset=" + srcset);
 
-  
+
   if (srcset) {
     srcset = srcset.split(",");
     console.debug("srcset", srcset);
     if (Array.isArray(srcset) && srcset.length > 0) {
-      for (var i=0; i<srcset.length; i++) {
+      for (var i = 0; i < srcset.length; i++) {
         if (typeof srcset[i] == "string") {
           srcset[i] = srcset[i].trim();
           var parts = srcset[i].split(" ");
@@ -79,24 +71,24 @@ sck.parseSrcSet = function(image) {
         }
       }
     }
-  } 
-  
+  }
+
   if (highres < 800) highurl = datasrcimg;
-  
+
   return highurl;
-  
+
 }
 
-sck.findImageUrlDom = function(link) { 
-  
-  sck.get(link.href, function(xhr) {
+sck.findImageUrlDom = function (link) {
+
+  sck.get(link.href, function (xhr) {
     var el = document.createElement('div');
     el.innerHTML = xhr.responseText;
     var images = el.getElementsByTagName("img");
     console.debug("---Spinning thru " + images.length + " images");
-    for (var i=0; i<images.length; i++) {
+    for (var i = 0; i < images.length; i++) {
       var image = images[i];
-      if (image.className.indexOf("wp-image") >= 0) {
+      if (image.className.indexOf("wp-post-image") >= 0) {
         var src = sck.parseSrcSet(image);
         if (src !== null) {
           console.debug("-----Found " + src);
@@ -108,7 +100,7 @@ sck.findImageUrlDom = function(link) {
     }
     delete el;
   });
-  
+
 }
 
 var div = document.createElement("div");
@@ -123,7 +115,7 @@ textarea.id = "scktextarea";
 textarea.style.top = "55px";
 textarea.style.left = "0px";
 textarea.style.height = "100px";
-textarea.style.width  = "1500px";
+textarea.style.width = "1500px";
 textarea.style.display = "none";
 
 var button = document.createElement("button");
@@ -132,7 +124,7 @@ button.style.top = "0px";
 button.style.left = "0px";
 button.innerHTML = "Open List";
 
-button.onclick = function(event) {
+button.onclick = function (event) {
   var t = document.getElementById("scktextarea");
   var b = document.getElementById("sckbutton");
   if (t.style.display === "none") {
