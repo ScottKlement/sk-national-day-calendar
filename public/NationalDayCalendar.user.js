@@ -89,6 +89,7 @@ sck.findImageUrlDom = function (link) {
     for (var i = 0; i < images.length; i++) {
       var image = images[i];
       if (image.className.indexOf("wp-post-image") >= 0) {
+        console.debug(image);
         var src = sck.parseSrcSet(image);
         if (src !== null) {
           console.debug("-----Found " + src);
@@ -110,6 +111,7 @@ div.style.top = "0px";
 div.style.left = "0px";
 div.style.zIndex = 10001;
 
+
 var textarea = document.createElement("textarea");
 textarea.id = "scktextarea";
 textarea.style.top = "55px";
@@ -117,6 +119,9 @@ textarea.style.left = "0px";
 textarea.style.height = "100px";
 textarea.style.width = "1500px";
 textarea.style.display = "none";
+textarea.style.fontFamily = "fixed,monospace";
+textarea.style.fontSize = "11px";
+textarea.style.lineHeight = "12px";
 
 var button = document.createElement("button");
 button.id = "sckbutton";
