@@ -75,6 +75,11 @@ sck.parseSrcSet = function (image) {
 
   if (highres < 800) highurl = datasrcimg;
 
+  if ((highurl == "" || highurl == null) && image.src != null) {
+    highurl = image.src;
+    console.debug("backoff to " + image.src);
+  }
+
   return highurl;
 
 }
