@@ -1,32 +1,25 @@
 // ==UserScript==
 // @name        National Day Calendar
 // @namespace   ndc
-// @match       https://nationaldaycalendar.com/what-day-is-it/*
-// @match       https://nationaldaycalendar.com/tomorrow/*
+// @match       https://www.nationaldaycalendar.com/what-day-is-it/*
+// @match       https://www.nationaldaycalendar.com/tomorrow/*
 // @version  1
 // @grant    GM.openInTab
 // @grant    GM.xmlHttpRequest
 // ==/UserScript==
+
 var sck = {};
 
 sck.getList = function () {
 
-  var list = document.querySelectorAll("div.ultp-block-entry-heading h3.ultp-block-title a");
+  var list = document.querySelectorAll("picture.is-loaded source[type='image/webp']");
 
   if (list.length === 0) {
-    alert("No Links Found!");
+    alert("No webp images found!");
     return null;
   }
 
   return list;
-}
-
-
-sck.logList = function (list) {
-  if (!list) return;
-  for (var i = 0; i < list.length; i++) {
-    console.info("link" + i + ": " + list[i].href);
-  }
 }
 
 sck.get = function (gurl, cb) {
@@ -37,19 +30,11 @@ sck.get = function (gurl, cb) {
   });
 }
 
-sck.parseSrcSet = function (image) {
+sck.parseSrcSet = function (sobj) {
 
-  var datasrcimg = image.getAttribute("data-src-img");
-
-  var srcset = image.srcset;
-  if (!srcset) srcset = image.getAttribute("data-srcset-img");
-
+  var srcset = sobj.getAttribute("srcset");
   var highres = 0;
   var highurl = "";
-
-
-  console.debug("------- datasrcimg=" + datasrcimg + "   srcset=" + srcset);
-
 
   if (srcset) {
     srcset = srcset.split(",");
@@ -73,89 +58,76 @@ sck.parseSrcSet = function (image) {
     }
   }
 
-  if (highres < 800) highurl = datasrcimg;
-
-  if ((highurl == "" || highurl == null) && image.src != null) {
-    highurl = image.src;
-    console.debug("backoff to " + image.src);
-  }
-
   return highurl;
 
 }
 
-sck.findImageUrlDom = function (link) {
+sck.addDomElements = function () {
 
-  sck.get(link.href, function (xhr) {
-    var el = document.createElement('div');
-    el.innerHTML = xhr.responseText;
-    var images = el.getElementsByTagName("img");
-    console.debug("---Spinning thru " + images.length + " images");
-    for (var i = 0; i < images.length; i++) {
-      var image = images[i];
-      if (image.className.indexOf("wp-post-image") >= 0) {
-        console.debug(image);
-        var src = sck.parseSrcSet(image);
-        if (src !== null) {
-          console.debug("-----Found " + src);
-          var t = document.getElementById("scktextarea");
-          t.appendChild(document.createTextNode(src + "\n"));
-          break;
-        }
-      }
+  var div = document.createElement("div");
+  div.style.position = "fixed";
+  div.id = "sckdiv";
+  div.style.top = "0px";
+  div.style.left = "0px";
+  div.style.zIndex = 10001;
+
+
+  var textarea = document.createElement("textarea");
+  textarea.id = "scktextarea";
+  textarea.style.top = "55px";
+  textarea.style.left = "0px";
+  textarea.style.height = "100px";
+  textarea.style.width = "1500px";
+  textarea.style.display = "none";
+  textarea.style.fontFamily = "fixed,monospace";
+  textarea.style.fontSize = "11px";
+  textarea.style.lineHeight = "12px";
+
+  var button = document.createElement("button");
+  button.id = "sckbutton";
+  button.style.top = "0px";
+  button.style.left = "0px";
+  button.innerHTML = "Open List";
+
+  button.onclick = function (event) {
+    var t = document.getElementById("scktextarea");
+    var b = document.getElementById("sckbutton");
+    if (t.style.display === "none") {
+      t.style.display = "block";
+      b.innerHTML = "Close List";
+      t.select();
     }
-    delete el;
-  });
+    else {
+      t.style.display = "none";
+      b.innerHTML = "Open List";
+    }
+  }
+
+  div.appendChild(button);
+  div.appendChild(textarea);
+
+  var mainContent = document.getElementById("main-content");
+  var parentNode = mainContent.parentNode;
+
+  parentNode.insertBefore(div, mainContent);
+
+  alert("dom stuff");
 
 }
 
-var div = document.createElement("div");
-div.style.position = "fixed";
-div.id = "sckdiv";
-div.style.top = "0px";
-div.style.left = "0px";
-div.style.zIndex = 10001;
+sck.examinePage = function () {
 
-
-var textarea = document.createElement("textarea");
-textarea.id = "scktextarea";
-textarea.style.top = "55px";
-textarea.style.left = "0px";
-textarea.style.height = "100px";
-textarea.style.width = "1500px";
-textarea.style.display = "none";
-textarea.style.fontFamily = "fixed,monospace";
-textarea.style.fontSize = "11px";
-textarea.style.lineHeight = "12px";
-
-var button = document.createElement("button");
-button.id = "sckbutton";
-button.style.top = "0px";
-button.style.left = "0px";
-button.innerHTML = "Open List";
-
-button.onclick = function (event) {
-  var t = document.getElementById("scktextarea");
-  var b = document.getElementById("sckbutton");
-  if (t.style.display === "none") {
-    t.style.display = "block";
-    b.innerHTML = "Close List";
-    t.select();
-  }
-  else {
-    t.style.display = "none";
-    b.innerHTML = "Open List";
+  var list = sck.getList();
+  for (var lunk of list) {
+    var url = sck.parseSrcSet(lunk);
+    alert(url);
+    var t = document.getElementById("scktextarea");
+    t.appendChild(document.createTextNode(url + "\n"));
   }
 }
 
-div.appendChild(button);
-div.appendChild(textarea);
-
-document.body.insertBefore(div, document.body.firstChild);
-
-var list = sck.getList();
-sck.logList(list);
-for (var lunk of list) {
-  console.debug("lunk = " + lunk.href);
-  sck.findImageUrlDom(lunk);
-}
+const TIMEOUT = 2000;
+setTimeout(function () {
+  sck.addDomElements();
+  sck.examinePage();
+}, TIMEOUT);

@@ -104,6 +104,10 @@ function fileName(url) {
   out_image = path.basename(out_image);
   out_image = decodeURIComponent(out_image);
 
+  out_image = out_image.replace(/\.jpg$/, ".png");
+  out_image = out_image.replace(/\.jpeg$/, ".png");
+  out_image = out_image.replace(/\.webp$/, ".png");
+  
   return out_image; 
 }
 
