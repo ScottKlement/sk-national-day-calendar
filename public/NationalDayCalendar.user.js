@@ -111,8 +111,6 @@ sck.addDomElements = function () {
 
   parentNode.insertBefore(div, mainContent);
 
-  alert("dom stuff");
-
 }
 
 sck.examinePage = function () {
@@ -120,7 +118,6 @@ sck.examinePage = function () {
   var list = sck.getList();
   for (var lunk of list) {
     var url = sck.parseSrcSet(lunk);
-    alert(url);
     var t = document.getElementById("scktextarea");
     t.appendChild(document.createTextNode(url + "\n"));
   }
