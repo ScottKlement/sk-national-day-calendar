@@ -12,7 +12,9 @@ var sck = {};
 
 sck.getList = function () {
 
-  var list = document.querySelectorAll("picture.is-loaded source[type='image/webp']");
+//  var list = document.querySelectorAll("picture.is-loaded source[type='image/webp']");
+  var list = document.querySelectorAll("a phoenix-picture picture source[type='image/webp']");
+//  console.debug("  is-loaded: " + list.length + "   without: " + list2.length);
 
   if (list.length === 0) {
     alert("No webp images found!");
@@ -33,29 +35,34 @@ sck.get = function (gurl, cb) {
 sck.parseSrcSet = function (sobj) {
 
   var srcset = sobj.getAttribute("srcset");
+  if (!srcset && sobj.dataset) srcset = sobj.dataset.srcset;
   var highres = 0;
   var highurl = "";
 
   if (srcset) {
     srcset = srcset.split(",");
-    console.debug("srcset", srcset);
+//    console.debug("srcset", srcset);
     if (Array.isArray(srcset) && srcset.length > 0) {
       for (var i = 0; i < srcset.length; i++) {
         if (typeof srcset[i] == "string") {
           srcset[i] = srcset[i].trim();
           var parts = srcset[i].split(" ");
-          console.debug("  parts", parts);
+//          console.debug("  parts", parts);
           if (parts.length == 2) {
             var res = parseInt(parts[1]);
             if (res > highres) {
               highres = res;
               highurl = parts[0];
-              console.debug("    result", highurl);
+//              console.debug("    result", highurl);
             }
           }
         }
       }
     }
+  }
+  else {
+    console.debug("no srcset");
+    console.debug(sobj);
   }
 
   return highurl;
@@ -114,8 +121,27 @@ sck.addDomElements = function () {
 }
 
 sck.examinePage = function () {
+  
+  var count = 0;
+  var phpix = document.getElementsByTagName("phoenix-picture");
+  for (var pic of phpix) {
+    var pnode = pic.parentNode;
+    if (pnode.tagName == "A") 
+      count ++;
+  }
+  
+//  console.debug("  counted " + count + " pics");
 
   var list = sck.getList();
+//  console.debug("  received " + list.length + " images");
+  
+  if (count > list.length) {
+    setTimeout(function() {
+      sck.examinePage();
+    }, 2000);
+    return;
+  }
+  
   for (var lunk of list) {
     var url = sck.parseSrcSet(lunk);
     var t = document.getElementById("scktextarea");
